@@ -1,41 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dracula">
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
-    <meta charset="UTF-8">
-    <title>EpicTask</title>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+<meta charset="UTF-8">
+<title>OVNIs Registrados</title>
 </head>
 <body>
-
-<h1 class="text-2xl font-bold text-primary p-8">Epic Task</h1>
-
-<a href="/task/form" class="btn btn-primary">Nova Tarefa</a>
-
+<h1 class="text-2xl font-bold text-primary p-8">OVNIs Registrados</h1>
+<a href="/register/form" class="btn btn-primary m-4">Novo Registro</a>
 <div th:if="${message}" role="alert" class="alert alert-success alert-soft m-4">
-    <span th:text="${message}"></span>
+<span th:text="${message}"></span>
 </div>
-
 <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center gap-4 p-8">
-    <div th:each="task : ${tasks}" class="card card-border bg-base-300 w-96">
-        <div th:text="${task.score + ' pts'}" class="badge badge-accent m-4"></div>
-
-        <div class="card-body items-center">
-            <h2 th:text="${task.title}" class="card-title"></h2>
-            <p th:text="${task.description}" ></p>
-            <div th:text="${task.status + '%'}"
-                 class="radial-progress bg-secondary text-secondary-content border-secondary border-4"
-                 th:style="${'--value:' + task.status}" th:aria-valuenow="${task.status}" role="progressbar">
-            </div>
-        </div>
-
-        <div class="card-actions justify-end m-4">
-            <button class="btn btn-primary">apagar</button>
-        </div>
-    </div>
+<div th:each="ovni : ${registers}" class="card card-border bg-base-300 w-96">
+<div class="card-body items-center">
+<h2 th:text="${ovni.location}" class="card-title"></h2>
+<p><strong>Data e Hora:</strong> <span th:text="${#dates.format(ovni.localDateTime, 'dd/MM/yyyy HH:mm')}"></span></p>
+<p><strong>Formato:</strong> <span th:text="${ovni.shapeEnum}"></span></p>
+<p><strong>Quantidade:</strong> <span th:text="${ovni.quantity}"></span></p>
+</div>
+<!-- Ações futuras de editar/apagar -->
+<div class="card-actions justify-end m-4 space-x-2">
+<!-- Exemplos de botões, endpoints ainda não implementados -->
+<a th:href="@{'/register/edit/' + ${ovni.id}}" class="btn btn-warning btn-sm">Editar</a>
+<form th:action="@{'/register/delete/' + ${ovni.id}}" method="post" style="display:inline">
+<button type="submit" class="btn btn-error btn-sm">Apagar</button>
+</form>
+</div>
+</div>
 </main>
-
-
 </body>
 </html>
