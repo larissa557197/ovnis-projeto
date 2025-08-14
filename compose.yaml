@@ -3,8 +3,8 @@ services:
     image: 'postgres:latest'
     container_name: postgres_g
     environment:
-      - 'POSTGRES_DB=ovnis-projeto'
-      - 'POSTGRES_PASSWORD=ovnis-projeto'
-      - 'POSTGRES_USER=ovnis-projeto'
+      - 'POSTGRES_DB=ovni'
+      - 'POSTGRES_PASSWORD=ovni'
+      - 'POSTGRES_USER=ovni'
     ports:
       - '5432:5432'
