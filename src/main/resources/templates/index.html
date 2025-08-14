@@ -8,29 +8,41 @@
     <title>OVNIs Registrados</title>
 </head>
 <body>
-    <h1 class="text-2xl font-bold text-primary p-8">OVNIs Registrados</h1>
+<h1 class="text-2xl font-bold text-primary p-8">OVNIs Registrados</h1>
 
-    <a href="/register/form" class="btn btn-primary m-4">Novo Registro</a>
+<a href="/register/form" class="btn btn-primary m-4">Novo Registro</a>
 
-    <div th:if="${message}" role="alert" class="alert alert-success alert-soft m-4">
-        <span th:text="${message}"></span>
-    </div>
+<!-- Flash message -->
+<div th:if="${message}" role="alert" class="alert alert-success m-4">
+    <span th:text="${message}">Registro salvo com sucesso!</span>
+</div>
 
-    <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center gap-4 p-8">
-        <div th:each="ovni : ${register}" class="card card-border bg-base-300 w-96">
-            <div class="card-body items-center">
-                <h2 th:text="${ovni.location}" class="card-title"></h2>
-                <p><strong>Data e Hora:</strong> <span th:text="${ovni.localDateTime}"></span></p>
-                <p><strong>Formato:</strong> <span th:text="${ovni.shapeEnum}"></span></p>
-                <p><strong>Quantidade:</strong> <span th:text="${ovni.quantity}"></span></p>
-            </div>
-            <div class="card-actions justify-end m-4 space-x-2">
-                <a th:href="@{'/register/edit/' + ${ovni.id}}" class="btn btn-warning btn-sm">Editar</a>
-                <form th:action="@{'/register/delete/' + ${ovni.id}}" method="post" style="display:inline">
-                    <button type="submit" class="btn btn-error btn-sm">Apagar</button>
-                </form>
-            </div>
+<!-- Lista vazia -->
+<div th:if="${#lists.isEmpty(registers)}" class="m-4 alert">
+    Nenhum registro encontrado.
+</div>
+
+<main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center gap-4 p-8"
+      th:if="${!#lists.isEmpty(registers)}">
+    <!-- ATENÇÃO: usar 'registers' (plural) -->
+    <div th:each="ovni : ${registers}" class="card bg-base-300 w-96">
+        <div class="card-body items-center">
+            <h2 th:text="${ovni.location}" class="card-title">Localização</h2>
+            <p>
+                <strong>Data e Hora:</strong>
+                <span th:text="${#temporals.format(ovni.localDateTime, 'dd/MM/yyyy HH:mm')}">01/01/2025 12:00</span>
+            </p>
+            <p><strong>Formato:</strong> <span th:text="${ovni.shapeEnum}">DISK</span></p>
+            <p><strong>Quantidade:</strong> <span th:text="${ovni.quantity}">1</span></p>
         </div>
-    </main>
+        <div class="card-actions justify-end m-4 space-x-2">
+            <!-- Use path variables -->
+            <a th:href="@{/register/edit/{id}(id=${ovni.id})}" class="btn btn-warning btn-sm">Editar</a>
+            <form th:action="@{/register/delete/{id}(id=${ovni.id})}" method="post" style="display:inline">
+                <button type="submit" class="btn btn-error btn-sm">Apagar</button>
+            </form>
+        </div>
+    </div>
+</main>
 </body>
 </html>
