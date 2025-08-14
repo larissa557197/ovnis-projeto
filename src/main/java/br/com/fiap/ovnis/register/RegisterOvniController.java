@@ -1,5 +1,6 @@
 package br.com.fiap.ovnis.register;
 
+import br.com.fiap.ovnis.register.enums.ShapeEnum;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,12 +24,15 @@ public class RegisterOvniController {
     public String index(Model model){
         var registers = registerOvniService.getAllRegister();
         model.addAttribute("registers", registers);
+        model.addAttribute("shapes", ShapeEnum.values());
         return "index";
     }
 
     // exibindo o form
     @GetMapping("/form")
-    public String form(){
+    public String form(Model model){
+        model.addAttribute("register", registerOvniService.getAllRegister());
+        model.addAttribute("shapes", ShapeEnum.values());
         return "form";
     }
 
