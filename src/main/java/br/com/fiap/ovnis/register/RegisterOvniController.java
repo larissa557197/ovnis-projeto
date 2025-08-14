@@ -4,6 +4,7 @@ import br.com.fiap.ovnis.register.enums.ShapeEnum;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -19,28 +20,25 @@ public class RegisterOvniController {
         this.registerOvniService = registerOvniService;
     }
 
-    // exibindo a lista de todos os sightings
+    // GET /register -> lista (index)
     @GetMapping
     public String index(Model model){
-        var registers = registerOvniService.getAllRegister();
-        model.addAttribute("registers", registers);
-        model.addAttribute("shapes", ShapeEnum.values());
+        model.addAttribute("registers", registerOvniService.getAllRegister());
         return "index";
     }
 
-    // exibindo o form
+    // GET /register/form -> formulário de cadastro
     @GetMapping("/form")
     public String form(Model model){
-        model.addAttribute("register", registerOvniService.getAllRegister());
-        model.addAttribute("shapes", ShapeEnum.values());
+        model.addAttribute("registerOvni", new RegisterOvni());
         return "form";
     }
 
-    // cadastrando um registro pelo form
+    // POST /register/form -> cria e redireciona para a lista
     @PostMapping("/form")
     public String create(RegisterOvni registerOvni, RedirectAttributes redirect){
         registerOvniService.save(registerOvni);
-        redirect.addFlashAttribute("message", "Ovni registrado com sucesso!");
-        return "redirect:/register"; //301
+        redirect.addFlashAttribute("message", "Registro cadastrado com sucesso!");
+        return "redirect:/register";
     }
 }

@@ -29,6 +29,9 @@ public class RegisterOvni {
     @Column(name = "local_date_time")
     private LocalDateTime localDateTime;
 
+    @Column(name = "color")
+    private String color;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "shape_enum")
     private ShapeEnum shapeEnum;

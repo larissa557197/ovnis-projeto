@@ -1,40 +1,60 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dracula">
+<html lang="en" data-theme="dracula" xmlns:th="http://www.thymeleaf.org">
 <head>
-<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
-<meta charset="UTF-8">
-<title>Registrar OVNI</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <title>Novo Sighting</title>
 </head>
 <body>
-<h1 class="text-2xl font-bold text-primary p-8">Registrar OVNI</h1>
+<h1 class="text-2xl font-bold text-primary p-8">Novo Sighting</h1>
+
 <main class="grid place-items-center gap-4 p-8">
-<form class="w-full max-w-md" method="post" th:action="@{/register/form}">
-<fieldset class="fieldset">
-<legend class="fieldset-legend">Localização</legend>
-<input name="location" type="text" class="input" placeholder="Digite a localização" th:value="*{location}" required />
-</fieldset>
-<fieldset class="fieldset">
-<legend class="fieldset-legend">Data e Hora</legend>
-<input name="localDateTime" type="datetime-local" class="input" th:value="*{localDateTime}" required />
-</fieldset>
-<fieldset class="fieldset">
-<legend class="fieldset-legend">Formato</legend>
-<select name="shapeEnum" class="select select-primary" th:value="*{shapeEnum}" required>
-<option th:each="shape : ${T(br.com.fiap.ovnis.register.enums.ShapeEnum).values()}"
-                       th:value="${shape}" th:text="${shape}">Forma</option>
-</select>
-</fieldset>
-<fieldset class="fieldset">
-<legend class="fieldset-legend">Quantidade de Objetos</legend>
-<input name="quantity" type="number" min="1" class="input" placeholder="Quantidade" th:value="*{quantity}" required />
-</fieldset>
-<div class="space-x-4 mt-4">
-<a href="/register" class="btn btn-neutral">Cancelar</a>
-<button type="submit" class="btn btn-primary">Salvar</button>
-</div>
-</form>
+    <form class="w-full max-w-md" method="post" th:action="@{/register/form}" th:object="${registerOvni}">
+        <!-- ID oculto (necessário para edição) -->
+        <input type="hidden" th:if="*{id}" th:field="*{id}" />
+
+        <!-- Location -->
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Location</legend>
+            <input th:field="*{location}" type="text" class="input" placeholder="Digite a localização" required />
+        </fieldset>
+
+        <!-- Date and time -->
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Date & Time</legend>
+            <input th:field="*{localDateTime}" type="datetime-local" class="input" required
+                   th:value="*{#temporals.format(localDateTime, 'yyyy-MM-dd''T''HH:mm')}" />
+        </fieldset>
+
+        <!-- Color -->
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Color</legend>
+            <input th:field="*{color}" type="text" class="input" placeholder="Color (ex.: Green)" required />
+        </fieldset>
+
+        <!-- Shape (Enum) -->
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Shape</legend>
+            <select th:field="*{shapeEnum}" class="select" required>
+                <option value="" disabled>Selecione a forma</option>
+                <option th:each="shape : ${T(br.com.fiap.ovnis.register.enums.ShapeEnum).values()}"
+                        th:value="${shape}" th:text="${shape}">SHAPE</option>
+            </select>
+        </fieldset>
+
+        <!-- Quantity -->
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Quantity</legend>
+            <input th:field="*{quantity}" type="number" min="1" class="input" placeholder="Quantidade de objetos" required />
+        </fieldset>
+
+        <div class="space-x-4 mt-4">
+            <a href="/register" class="btn btn-neutral">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </form>
 </main>
 </body>
 </html>
