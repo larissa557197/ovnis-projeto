@@ -77,10 +77,12 @@ services:
 ---
 
 ## 📷 Preview das Páginas
-####   | Página         |   Descrição              |
-       |----------------|--------------------------|
-####   | localhost:8080 |  página inicial          |
-####   | /register/form | formulário de cadastro   |
+|      Página      |        Descrição       | 
+|------------------|------------------------|
+| `localhost:8080` | Página inicial         | 
+| `/register/form` | formulário de cadastro |
+
+
 
 
 
