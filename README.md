@@ -49,11 +49,11 @@ cd ovnis-projeto
 services:
   postgres:
     image: 'postgres:latest'
-    container_name: postgres_
+    container_name: postgres_g
     environment:
-      - 'POSTGRES_DB='
-      - 'POSTGRES_PASSWORD='
-      - 'POSTGRES_USER='
+      - 'POSTGRES_DB=ovni'
+      - 'POSTGRES_PASSWORD=ovni'
+      - 'POSTGRES_USER=ovni'
     ports:
       - '5432:5432'
 
