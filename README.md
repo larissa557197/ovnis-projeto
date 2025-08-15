@@ -24,4 +24,67 @@ Cada registro inclui:
 
 --- 
 
+##Tecnologias Utilizadas
+- Java 17+
+- Spring Boot (Web, Data JPA, Thymeleaf)
+- PostgreSQL
+- Flyway
+- Docker
+- Maven/Gradle
+
+---
+
+## Configuração e Execução
+
+### Clonar o repositório
+```
+git clone
+cd ovnis-projeto
+```
+
+### Subir o PostgreSQL com Docker
+`docker-compose up -d`
+
+```
+services:
+  postgres:
+    image: 'postgres:latest'
+    container_name: postgres_
+    environment:
+      - 'POSTGRES_DB='
+      - 'POSTGRES_PASSWORD='
+      - 'POSTGRES_USER='
+    ports:
+      - '5432:5432'
+
+```
+
+### Rodar a aplicação
+
+- com mvn
+`./mvnw spring-boot:run`
+
+- com gradlew
+`./gradlew bootRun`
+
+---
+## Estrutura MVC
+- **Model** → Classe `RegisterOvni` mapeada como entidade JPA
+- **Repository** → Interface `RegisterOvniRepository` estendendo `JpaRepository`
+- **Controller** → Classe `RegisterOvniController` com rotas GET/POST
+- **Views** → Templates Thymeleaf (`index.html`, `form.html`)
+
+---
+
+## 📷 Preview das Páginas
+#### Página             Descrição
+---
+#### /register          
+
+
+
+---
+Este projeto foi desenvolvido para fins educacionais na disciplina de `Java Advanced`.
+
+
 
