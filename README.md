@@ -14,4 +14,14 @@
 
 ---
 
-## 
+## Campos do Avistamento
+Cada registro inclui:
+- **Location** (local do avistamento)
+- **Date and Time** (data e hora do avistamento)
+- **Color** (cor observada)
+- **Shape** (`DISC`, `SPHERE`, `TRIANGLE`, `OTHER`)
+- **Quantity of Objects** (quantidade de objetos avistados)
+
+--- 
+
+
