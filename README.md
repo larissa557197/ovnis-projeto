@@ -38,7 +38,7 @@ Cada registro inclui:
 
 ### Clonar o repositório
 ```
-git clone https://github.com/`{seu}_usuario}`/ovnis-projeto.git
+git clone https://github.com/seu_usuario/ovnis-projeto.git
 cd ovnis-projeto
 ```
 
